@@ -1,0 +1,2112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dr. Emily Chen — Little Stars Pediatric Care</title>
+
+    <!-- Nunito (playful rounded body) + Fraunces (warm editorial display) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;0,900;1,600;1,700&family=Nunito:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        /* ============================================================
+       COLOR PALETTE
+       ============================================================
+       --cream      : warm page background
+       --coral      : primary accent (warm, friendly)
+       --sky        : secondary accent (calm, trustworthy)
+       --mint       : tertiary (health, fresh)
+       --sunshine   : highlight pops
+       --deep       : dark text
+       --muted      : body copy grey
+    */
+        :root {
+            --cream: #FFF8F0;
+            --cream-deep: #FFF0E0;
+            --coral: #FF6B6B;
+            --coral-soft: #FF8E8E;
+            --coral-pale: #FFE8E8;
+            --sky: #4CAFF5;
+            --sky-pale: #E6F5FF;
+            --mint: #3ECFAE;
+            --mint-pale: #E4FBF5;
+            --sunshine: #FFD166;
+            --sun-pale: #FFF6DC;
+            --deep: #1E1B2E;
+            --dark-text: #2D2A3E;
+            --muted: #7C7A8C;
+            --border: rgba(0, 0, 0, 0.07);
+            --white: #FFFFFF;
+
+            --font-head: 'Fraunces', Georgia, serif;
+            --font-body: 'Nunito', sans-serif;
+            --max-w: 1180px;
+            --radius: 24px;
+            --radius-lg: 40px;
+        }
+
+        /* ============================================================
+       RESET & BASE
+       ============================================================ */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--cream);
+            color: var(--dark-text);
+            overflow-x: hidden;
+            line-height: 1.65;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        /* ============================================================
+       BUBBLY BACKGROUND SHAPES (decorative, CSS only)
+       ============================================================ */
+        .bg-shapes {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        /* Large soft circles that slowly drift */
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.22;
+            animation: shapeDrift 20s ease-in-out infinite alternate;
+        }
+
+        .shape-1 {
+            width: 600px;
+            height: 600px;
+            background: var(--coral);
+            top: -200px;
+            right: -150px;
+            filter: blur(90px);
+            animation-duration: 22s;
+        }
+
+        .shape-2 {
+            width: 500px;
+            height: 500px;
+            background: var(--sky);
+            bottom: -150px;
+            left: -100px;
+            filter: blur(80px);
+            animation-duration: 26s;
+            animation-delay: -8s;
+        }
+
+        .shape-3 {
+            width: 350px;
+            height: 350px;
+            background: var(--mint);
+            top: 45%;
+            left: 40%;
+            filter: blur(70px);
+            animation-duration: 18s;
+            animation-delay: -5s;
+        }
+
+        .shape-4 {
+            width: 280px;
+            height: 280px;
+            background: var(--sunshine);
+            top: 20%;
+            left: 10%;
+            filter: blur(60px);
+            opacity: 0.15;
+            animation-duration: 24s;
+            animation-delay: -12s;
+        }
+
+        @keyframes shapeDrift {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(50px, 35px) scale(1.1);
+            }
+        }
+
+        /* Scattered tiny dots pattern */
+        .dots-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.4;
+            background-image: radial-gradient(circle, #FFD166 1px, transparent 1px),
+                radial-gradient(circle, #4CAFF5 1px, transparent 1px);
+            background-size: 60px 60px, 90px 90px;
+            background-position: 0 0, 30px 30px;
+        }
+
+        /* ============================================================
+       UTILITY
+       ============================================================ */
+        .container {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Reveal on scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity 0.65s cubic-bezier(.22, .61, .36, 1), transform 0.65s cubic-bezier(.22, .61, .36, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger children */
+        .stagger>*:nth-child(1) {
+            transition-delay: 0.05s;
+        }
+
+        .stagger>*:nth-child(2) {
+            transition-delay: 0.12s;
+        }
+
+        .stagger>*:nth-child(3) {
+            transition-delay: 0.20s;
+        }
+
+        .stagger>*:nth-child(4) {
+            transition-delay: 0.28s;
+        }
+
+        .stagger>*:nth-child(5) {
+            transition-delay: 0.36s;
+        }
+
+        .stagger>*:nth-child(6) {
+            transition-delay: 0.44s;
+        }
+
+        /* Pill badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1.1rem;
+            border-radius: 100px;
+            background: var(--coral-pale);
+            color: var(--coral);
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            border: 1.5px solid rgba(255, 107, 107, 0.25);
+        }
+
+        .badge .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--coral);
+            animation: bounceDot 1.5s ease-in-out infinite;
+        }
+
+        @keyframes bounceDot {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.7);
+            }
+        }
+
+        /* Primary button */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            background: var(--coral);
+            color: var(--white);
+            font-family: var(--font-body);
+            font-weight: 800;
+            font-size: 0.95rem;
+            padding: 0.9rem 2rem;
+            border-radius: 100px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.25s, transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 8px 28px rgba(255, 107, 107, 0.35);
+        }
+
+        .btn-primary:hover {
+            background: var(--coral-soft);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 14px 40px rgba(255, 107, 107, 0.45);
+        }
+
+        /* Sky button */
+        .btn-sky {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            background: var(--sky-pale);
+            color: var(--sky);
+            font-family: var(--font-body);
+            font-weight: 800;
+            font-size: 0.95rem;
+            padding: 0.9rem 2rem;
+            border-radius: 100px;
+            border: 2px solid rgba(76, 175, 245, 0.25);
+            cursor: pointer;
+            transition: background 0.25s, transform 0.2s;
+        }
+
+        .btn-sky:hover {
+            background: #d3ecfd;
+            transform: translateY(-3px);
+        }
+
+        /* Ghost outline */
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            color: var(--coral);
+            font-family: var(--font-body);
+            font-weight: 800;
+            font-size: 0.9rem;
+            padding: 0.75rem 1.6rem;
+            border-radius: 100px;
+            border: 2px solid var(--coral);
+            cursor: pointer;
+            transition: background 0.25s, transform 0.2s;
+        }
+
+        .btn-ghost:hover {
+            background: var(--coral-pale);
+            transform: translateY(-2px);
+        }
+
+        /* Section label */
+        .sec-label {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--coral);
+            background: var(--coral-pale);
+            padding: 0.28rem 0.9rem;
+            border-radius: 100px;
+            margin-bottom: 0.85rem;
+        }
+
+        /* Section title */
+        .sec-title {
+            font-family: var(--font-head);
+            font-size: clamp(1.9rem, 3.8vw, 2.9rem);
+            font-weight: 700;
+            line-height: 1.18;
+            color: var(--deep);
+        }
+
+        .sec-title em {
+            font-style: italic;
+            color: var(--coral);
+        }
+
+        .sec-title .sky {
+            color: var(--sky);
+        }
+
+        /* ============================================================
+       NAVIGATION
+       ============================================================ */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.1rem 0;
+            transition: background 0.4s, box-shadow 0.4s;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 248, 240, 0.9);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Logo */
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--coral);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+        }
+
+        .logo-text {
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--deep);
+        }
+
+        .logo-text span {
+            color: var(--coral);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--coral);
+        }
+
+        .nav-book {
+            background: var(--coral);
+            color: var(--white) !important;
+            padding: 0.55rem 1.4rem;
+            border-radius: 100px;
+            font-weight: 800 !important;
+            font-size: 0.85rem !important;
+            transition: background 0.25s, transform 0.2s !important;
+            box-shadow: 0 4px 16px rgba(255, 107, 107, 0.3);
+        }
+
+        .nav-book:hover {
+            background: var(--coral-soft) !important;
+            color: var(--white) !important;
+            transform: translateY(-2px);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2.5px;
+            background: var(--deep);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        /* ============================================================
+       HERO
+       ============================================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 0 5rem;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        /* Headline */
+        .hero-badge {
+            margin-bottom: 1.4rem;
+        }
+
+        .hero-title {
+            font-family: var(--font-head);
+            font-size: clamp(3rem, 5.5vw, 4.4rem);
+            font-weight: 900;
+            line-height: 1.05;
+            color: var(--deep);
+            margin-bottom: 1.4rem;
+        }
+
+        .hero-title .coral {
+            color: var(--coral);
+        }
+
+        .hero-title .wavy {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Wavy underline on key word */
+        .hero-title .wavy::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12'%3E%3Cpath d='M0,6 Q15,0 30,6 Q45,12 60,6 Q75,0 90,6 Q105,12 120,6' stroke='%23FF6B6B' stroke-width='3' fill='none'/%3E%3C/svg%3E") repeat-x center / 120px 12px;
+        }
+
+        .hero-desc {
+            font-size: 1rem;
+            color: var(--muted);
+            max-width: 460px;
+            line-height: 1.8;
+            margin-bottom: 2.2rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        /* Trust row */
+        .trust-row {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .trust-avatars {
+            display: flex;
+        }
+
+        .trust-avatars .av {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2.5px solid var(--white);
+            background: var(--coral-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            margin-left: -10px;
+            overflow: hidden;
+        }
+
+        .trust-avatars .av:first-child {
+            margin-left: 0;
+        }
+
+        .trust-avatars .av img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .trust-text {
+            font-size: 0.82rem;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .trust-text strong {
+            display: block;
+            color: var(--deep);
+            font-size: 0.88rem;
+        }
+
+        /* ============================================================
+       HERO VISUAL — right side
+       ============================================================ */
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Blob-shaped photo frame */
+        .blob-frame {
+            position: relative;
+            width: 380px;
+            height: 440px;
+            /* Organic blob shape using clip-path */
+            clip-path: ellipse(46% 50% at 50% 50%);
+            border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+            overflow: hidden;
+            border: 4px solid var(--white);
+            box-shadow: 0 30px 80px rgba(255, 107, 107, 0.18), 0 0 0 8px var(--coral-pale);
+            animation: blobMorph 8s ease-in-out infinite;
+        }
+
+        @keyframes blobMorph {
+
+            0%,
+            100% {
+                border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+            }
+
+            25% {
+                border-radius: 50% 50% 45% 55% / 55% 45% 55% 45%;
+            }
+
+            50% {
+                border-radius: 45% 55% 60% 40% / 45% 55% 45% 55%;
+            }
+
+            75% {
+                border-radius: 55% 45% 50% 50% / 60% 40% 60% 40%;
+            }
+        }
+
+        .blob-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        /* Decorative circles around photo */
+        .deco-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px dashed;
+            pointer-events: none;
+        }
+
+        .deco-ring-1 {
+            width: 480px;
+            height: 480px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-color: rgba(255, 107, 107, 0.18);
+            animation: spinSlow 30s linear infinite;
+        }
+
+        .deco-ring-2 {
+            width: 540px;
+            height: 540px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-color: rgba(76, 175, 245, 0.12);
+            animation: spinSlow 40s linear infinite reverse;
+        }
+
+        @keyframes spinSlow {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        /* Floating emoji / stat cards */
+        .float-card {
+            position: absolute;
+            background: var(--white);
+            border-radius: 18px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            z-index: 3;
+        }
+
+        .float-card.top-left {
+            top: 20px;
+            left: -50px;
+            animation: floatY 4s ease-in-out infinite alternate;
+        }
+
+        .float-card.bottom-right {
+            bottom: 60px;
+            right: -40px;
+            animation: floatY 5s ease-in-out infinite alternate-reverse;
+        }
+
+        .float-card.bottom-left {
+            bottom: -20px;
+            left: 10px;
+            animation: floatY 4.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatY {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-14px);
+            }
+        }
+
+        .fc-emoji {
+            font-size: 1.4rem;
+        }
+
+        .fc-text {
+            font-size: 0.75rem;
+            line-height: 1.3;
+            color: var(--muted);
+        }
+
+        .fc-text strong {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--deep);
+            font-weight: 800;
+        }
+
+        /* Small floating bubbles */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: floatBubble 6s ease-in-out infinite;
+        }
+
+        .b1 {
+            width: 18px;
+            height: 18px;
+            background: var(--sunshine);
+            top: 80px;
+            right: 20px;
+            animation-delay: 0s;
+        }
+
+        .b2 {
+            width: 12px;
+            height: 12px;
+            background: var(--mint);
+            bottom: 160px;
+            left: -20px;
+            animation-delay: -2s;
+        }
+
+        .b3 {
+            width: 22px;
+            height: 22px;
+            background: var(--sky);
+            top: 200px;
+            left: -40px;
+            opacity: 0.6;
+            animation-delay: -4s;
+        }
+
+        @keyframes floatBubble {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        /* ============================================================
+       AGE BANDS / WHO WE SEE
+       ============================================================ */
+        .age-bands {
+            padding: 2rem 0 5rem;
+        }
+
+        .age-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .age-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: 100px;
+            padding: 0.65rem 1.4rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--dark-text);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .age-pill:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .age-pill .ep {
+            font-size: 1.2rem;
+        }
+
+        /* ============================================================
+       SERVICES
+       ============================================================ */
+        .services {
+            padding: 5rem 0;
+        }
+
+        .services-top {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+
+        /* Service card */
+        .svc-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 2rem;
+            border: 1.5px solid var(--border);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Colored top stripe */
+        .svc-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            border-radius: 24px 24px 0 0;
+        }
+
+        .svc-card.coral::before {
+            background: var(--coral);
+        }
+
+        .svc-card.sky::before {
+            background: var(--sky);
+        }
+
+        .svc-card.mint::before {
+            background: var(--mint);
+        }
+
+        .svc-card.sun::before {
+            background: var(--sunshine);
+        }
+
+        .svc-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.09);
+        }
+
+        .svc-card.coral:hover {
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+
+        .svc-card.sky:hover {
+            border-color: rgba(76, 175, 245, 0.3);
+        }
+
+        .svc-card.mint:hover {
+            border-color: rgba(62, 207, 174, 0.3);
+        }
+
+        .svc-card.sun:hover {
+            border-color: rgba(255, 209, 102, 0.4);
+        }
+
+        .svc-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .svc-card.coral .svc-icon {
+            background: var(--coral-pale);
+        }
+
+        .svc-card.sky .svc-icon {
+            background: var(--sky-pale);
+        }
+
+        .svc-card.mint .svc-icon {
+            background: var(--mint-pale);
+        }
+
+        .svc-card.sun .svc-icon {
+            background: var(--sun-pale);
+        }
+
+        .svc-card h3 {
+            font-family: var(--font-head);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: var(--deep);
+        }
+
+        .svc-card p {
+            font-size: 0.87rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* ============================================================
+       ABOUT
+       ============================================================ */
+        .about {
+            padding: 6rem 0;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        /* Right: visual */
+        .about-visual {
+            position: relative;
+            height: 520px;
+        }
+
+        .abt-main {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 75%;
+            height: 82%;
+            border-radius: 40% 30% 30% 40% / 40% 30% 40% 30%;
+            overflow: hidden;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
+            animation: gentleMorph 10s ease-in-out infinite;
+        }
+
+        @keyframes gentleMorph {
+
+            0%,
+            100% {
+                border-radius: 40% 30% 30% 40% / 40% 30% 40% 30%;
+            }
+
+            50% {
+                border-radius: 30% 40% 40% 30% / 30% 40% 30% 40%;
+            }
+        }
+
+        .abt-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .abt-sm {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50%;
+            height: 46%;
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 4px solid var(--white);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .abt-sm img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Fun stat bubble on image */
+        .fun-stat {
+            position: absolute;
+            top: 42%;
+            left: -24px;
+            background: var(--sunshine);
+            color: var(--deep);
+            border-radius: 20px;
+            padding: 1rem 1.25rem;
+            text-align: center;
+            box-shadow: 0 12px 36px rgba(255, 209, 102, 0.35);
+            animation: floatY 4s ease-in-out infinite alternate;
+        }
+
+        .fun-stat .bnum {
+            font-family: var(--font-head);
+            font-size: 2rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .fun-stat .blabel {
+            font-size: 0.7rem;
+            font-weight: 800;
+            display: block;
+            margin-top: 0.15rem;
+        }
+
+        /* Left: text */
+        .about-text .sec-label {
+            margin-bottom: 0.5rem;
+        }
+
+        .about-desc {
+            font-size: 0.95rem;
+            color: var(--muted);
+            line-height: 1.8;
+            margin: 1.1rem 0 1.8rem;
+            max-width: 480px;
+        }
+
+        /* Feature list */
+        .feat-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .feat-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.85rem;
+        }
+
+        .feat-check {
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            background: var(--mint-pale);
+            color: var(--mint);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .feat-text {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        .feat-text strong {
+            color: var(--dark-text);
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        /* ============================================================
+       MILESTONES / STATS BAND
+       ============================================================ */
+        .stats-band {
+            background: var(--coral);
+            border-radius: 32px;
+            margin: 0 2rem;
+            padding: 3rem 3.5rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-b {
+            position: relative;
+        }
+
+        .stat-b:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 20%;
+            bottom: 20%;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .stat-b .num {
+            font-family: var(--font-head);
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .stat-b .unit {
+            color: var(--sunshine);
+        }
+
+        .stat-b .lbl {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.75);
+            font-weight: 600;
+            margin-top: 0.3rem;
+        }
+
+        /* ============================================================
+       TESTIMONIALS
+       ============================================================ */
+        .testimonials {
+            padding: 6rem 0;
+        }
+
+        .test-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+
+        .test-card {
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .test-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.07);
+        }
+
+        .stars {
+            color: var(--sunshine);
+            letter-spacing: 2px;
+            margin-bottom: 0.85rem;
+            font-size: 0.9rem;
+        }
+
+        .test-q {
+            font-size: 0.88rem;
+            color: var(--muted);
+            line-height: 1.75;
+            font-style: italic;
+            margin-bottom: 1.4rem;
+        }
+
+        .test-auth {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .t-av {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: var(--coral-pale);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            border: 2px solid var(--white);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .t-av img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .auth-name {
+            font-weight: 800;
+            font-size: 0.9rem;
+            color: var(--deep);
+        }
+
+        .auth-sub {
+            font-size: 0.76rem;
+            color: var(--muted);
+        }
+
+        /* ============================================================
+       APPOINTMENT CTA
+       ============================================================ */
+        .appt {
+            padding: 6rem 0;
+        }
+
+        .appt-wrap {
+            background: linear-gradient(135deg, #FFF0E0 0%, #E6F5FF 100%);
+            border-radius: 36px;
+            padding: 5rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 3rem;
+            align-items: center;
+            border: 2px solid rgba(255, 107, 107, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative corner circles */
+        .appt-wrap::before {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            right: -80px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .appt-wrap::after {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: -60px;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(76, 175, 245, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .appt-title {
+            font-family: var(--font-head);
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 900;
+            color: var(--deep);
+            line-height: 1.18;
+            margin-bottom: 0.8rem;
+        }
+
+        .appt-title em {
+            font-style: italic;
+            color: var(--coral);
+        }
+
+        .appt-desc {
+            font-size: 0.93rem;
+            color: var(--muted);
+            max-width: 480px;
+            line-height: 1.75;
+        }
+
+        .contact-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-top: 1.8rem;
+        }
+
+        .ci {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.87rem;
+            font-weight: 700;
+            color: var(--dark-text);
+            background: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            border: 1.5px solid var(--border);
+        }
+
+        .appt-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        /* ============================================================
+       FOOTER
+       ============================================================ */
+        footer {
+            background: var(--deep);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .f-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .f-logo .logo-icon {
+            box-shadow: none;
+        }
+
+        .f-logo .logo-text {
+            color: var(--white);
+        }
+
+        .f-desc {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            max-width: 240px;
+        }
+
+        .f-col h4 {
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .f-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .f-col ul li a {
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .f-col ul li a:hover {
+            color: var(--coral);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            font-size: 0.78rem;
+        }
+
+        .f-socials {
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .fs-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s, background 0.2s;
+        }
+
+        .fs-btn:hover {
+            border-color: var(--coral);
+            color: var(--coral);
+            background: rgba(255, 107, 107, 0.08);
+        }
+
+        /* ============================================================
+       MARQUEE
+       ============================================================ */
+        .marquee-strip {
+            background: var(--coral);
+            padding: 0.8rem 0;
+            overflow: hidden;
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 2.5rem;
+            width: max-content;
+            animation: marquee 18s linear infinite;
+        }
+
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.9);
+            white-space: nowrap;
+        }
+
+        .marquee-star {
+            color: var(--sunshine);
+            font-size: 1rem;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ============================================================
+       SCROLL TO TOP
+       ============================================================ */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--coral);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 6px 22px rgba(255, 107, 107, 0.4);
+            transition: transform 0.2s, opacity 0.3s;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 99;
+        }
+
+        .scroll-top.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-3px) scale(1.08);
+        }
+
+        /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+        @media (max-width: 960px) {
+
+            .hero-grid,
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .hero-visual {
+                order: -1;
+            }
+
+            .blob-frame {
+                width: 300px;
+                height: 360px;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .test-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-band {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .appt-wrap {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .services-grid,
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-band {
+                grid-template-columns: 1fr 1fr;
+                padding: 2rem;
+                margin: 0 1rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .age-row {
+                gap: 0.6rem;
+            }
+
+            .float-card.top-left {
+                left: 0;
+            }
+
+            .float-card.bottom-right {
+                right: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============================================================
+       AMBIENT BACKGROUND
+       ============================================================ -->
+    <div class="bg-shapes" aria-hidden="true">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+    <div class="dots-bg" aria-hidden="true"></div>
+
+    <!-- ============================================================
+       NAVBAR
+       ============================================================ -->
+    <nav id="navbar">
+        <div class="container nav-inner">
+
+            <div class="nav-logo">
+                <div class="logo-icon">🍼</div>
+                <div class="logo-text">Little<span>Stars</span></div>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#appointment" class="nav-book">Book Visit</a></li>
+            </ul>
+
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================================
+       HERO
+       ============================================================ -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-grid">
+
+                <!-- Text -->
+                <div class="hero-text reveal">
+                    <div class="badge hero-badge">
+                        <span class="dot"></span> Newborn to Teen Care
+                    </div>
+
+                    <h1 class="hero-title">
+                        Every Little <span class="wavy coral">Heartbeat</span><br>
+                        Deserves the<br>
+                        Best Start 🌟
+                    </h1>
+
+                    <p class="hero-desc">
+                        Dr. Emily Chen is a board-certified pediatrician dedicated to nurturing the health and happiness
+                        of children from birth through adolescence — with warmth, expertise, and a gentle touch.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#appointment" class="btn-primary">🗓 Book an Appointment</a>
+                        <a href="#services" class="btn-sky">Our Services →</a>
+                    </div>
+
+                    <!-- Trust row -->
+                    <div class="trust-row">
+                        <div class="trust-avatars">
+                            <!-- Demo parent avatars -->
+                            <div class="av">👩</div>
+                            <div class="av">👨</div>
+                            <div class="av">👩‍👦</div>
+                            <div class="av">👨‍👧</div>
+                        </div>
+                        <div class="trust-text">
+                            <strong>3,800+ Happy Families</strong>
+                            Trust Dr. Emily with their children
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual -->
+                <div class="hero-visual reveal">
+
+                    <!-- Decorative rings -->
+                    <div class="deco-ring deco-ring-1"></div>
+                    <div class="deco-ring deco-ring-2"></div>
+
+                    <!-- Blob photo frame -->
+                    <div class="blob-frame">
+                        <!--
+              DEMO IMAGE — Replace with pediatrician's photo.
+              Ideal: warm, smiling doctor with a baby/child. 500×600px.
+            -->
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&q=80"
+                            alt="Dr. Emily Chen – Pediatrician" />
+                    </div>
+
+                    <!-- Floating cards -->
+                    <div class="float-card top-left">
+                        <span class="fc-emoji">👶</span>
+                        <div class="fc-text">
+                            <strong>Newborn Care</strong>
+                            First checkup within 48hrs
+                        </div>
+                    </div>
+
+                    <div class="float-card bottom-right">
+                        <span class="fc-emoji">💉</span>
+                        <div class="fc-text">
+                            <strong>All Vaccines</strong>
+                            CDC-approved schedule
+                        </div>
+                    </div>
+
+                    <div class="float-card bottom-left">
+                        <span class="fc-emoji">⭐</span>
+                        <div class="fc-text">
+                            <strong>4.9 Rating</strong>
+                            500+ parent reviews
+                        </div>
+                    </div>
+
+                    <!-- Decorative bubbles -->
+                    <div class="bubble b1"></div>
+                    <div class="bubble b2"></div>
+                    <div class="bubble b3"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+       AGE GROUPS WE SEE
+       ============================================================ -->
+    <section class="age-bands">
+        <div class="container">
+            <div class="age-row reveal stagger">
+                <div class="age-pill"><span class="ep">🍼</span> Newborns (0–1 mo)</div>
+                <div class="age-pill"><span class="ep">👶</span> Infants (1–12 mo)</div>
+                <div class="age-pill"><span class="ep">🧒</span> Toddlers (1–3 yrs)</div>
+                <div class="age-pill"><span class="ep">🧑</span> Preschool (3–5 yrs)</div>
+                <div class="age-pill"><span class="ep">🧑‍🏫</span> School Age (5–12 yrs)</div>
+                <div class="age-pill"><span class="ep">🧑‍🎤</span> Teens (13–18 yrs)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+       MARQUEE
+       ============================================================ -->
+    <div class="marquee-strip" aria-hidden="true">
+        <div class="marquee-track">
+            <div class="marquee-item"><span class="marquee-star">★</span> Well-Child Visits</div>
+            <div class="marquee-item"><span class="marquee-star">★</span> Vaccinations</div>
+            <div class="marquee-item"><span class="marquee-star">★</span> Sick Child Care</div>
+            <div class="marquee-item"><span class="marquee-star">★</span> Growth Monitoring</div>
+            <div class="marquee-item"><span class="marquee-star">★</span> Developmental Screening</div>
+            <div class="marquee-item"><span class="marquee-star">★</span> Telehealth Available</div>
+            <div class="marquee-item"><span class="marquee-star">★</span> Same-Day Sick Slots</div>
+            <div class="marquee-item"><span class="marquee-star">★</span> Newborn Consultations</div>
+            <!-- Duplicate for seamless loop -->
+            <div class="marquee-item"><span class="marquee-star">★</span> Well-Child Visits</div>
+            <div class="marquee-item"><span class="marquee-star">★</span> Vaccinations</div>
+            <div class="marquee-item"><span class="marquee-star">★</span> Sick Child Care</div>
+            <div class="marquee-item"><span class="marquee-star">★</span> Growth Monitoring</div>
+            <div class="marquee-item"><span class="marquee-star">★</span> Developmental Screening</div>
+            <div class="marquee-item"><span class="marquee-star">★</span> Telehealth Available</div>
+            <div class="marquee-item"><span class="marquee-star">★</span> Same-Day Sick Slots</div>
+            <div class="marquee-item"><span class="marquee-star">★</span> Newborn Consultations</div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+       SERVICES
+       ============================================================ -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="services-top reveal">
+                <div>
+                    <span class="sec-label">What We Offer</span>
+                    <h2 class="sec-title">Gentle Care for <em>Every Stage</em></h2>
+                </div>
+                <a href="#appointment" class="btn-ghost">View All →</a>
+            </div>
+
+            <div class="services-grid stagger">
+
+                <div class="svc-card coral reveal">
+                    <div class="svc-icon">👶</div>
+                    <h3>Newborn & Infant Care</h3>
+                    <p>First days checkups, feeding support, weight tracking, and jaundice monitoring to ensure your
+                        baby thrives right from the start.</p>
+                </div>
+
+                <div class="svc-card sky reveal">
+                    <div class="svc-icon">💉</div>
+                    <h3>Immunizations</h3>
+                    <p>Full CDC-recommended vaccine schedule from birth through adolescence, administered with a gentle,
+                        fear-free technique.</p>
+                </div>
+
+                <div class="svc-card mint reveal">
+                    <div class="svc-icon">📏</div>
+                    <h3>Growth & Development</h3>
+                    <p>Regular milestone screenings, head circumference, height and weight charting to ensure healthy
+                        developmental progress.</p>
+                </div>
+
+                <div class="svc-card sun reveal">
+                    <div class="svc-icon">🤒</div>
+                    <h3>Sick Child Visits</h3>
+                    <p>Same-day and urgent slots for fevers, ear infections, rashes, respiratory illness, and other
+                        sudden-onset concerns.</p>
+                </div>
+
+                <div class="svc-card coral reveal">
+                    <div class="svc-icon">🧠</div>
+                    <h3>Behavioral & Mental Health</h3>
+                    <p>Screening for ADHD, anxiety, and developmental delays with compassionate counseling and
+                        specialist referrals.</p>
+                </div>
+
+                <div class="svc-card sky reveal">
+                    <div class="svc-icon">💻</div>
+                    <h3>Telehealth Visits</h3>
+                    <p>Video consultations for follow-ups, minor concerns, prescription refills, and parent guidance —
+                        all from home.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+       STATS BAND
+       ============================================================ -->
+    <div class="stats-band reveal" style="position:relative;z-index:2;">
+        <div class="stat-b">
+            <div class="num">12<span class="unit">+</span></div>
+            <div class="lbl">Years in Pediatrics</div>
+        </div>
+        <div class="stat-b">
+            <div class="num">3.8<span class="unit">k</span></div>
+            <div class="lbl">Families Served</div>
+        </div>
+        <div class="stat-b">
+            <div class="num">99<span class="unit">%</span></div>
+            <div class="lbl">Parent Satisfaction</div>
+        </div>
+        <div class="stat-b">
+            <div class="num">4.9<span class="unit">★</span></div>
+            <div class="lbl">Average Rating</div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+       ABOUT
+       ============================================================ -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-grid">
+
+                <!-- Left text -->
+                <div class="about-text reveal">
+                    <span class="sec-label">Meet the Doctor</span>
+                    <h2 class="sec-title">Dr. Emily <em>Chen</em>, MD</h2>
+
+                    <p class="about-desc">
+                        A mother herself, Dr. Emily Chen understands that every child is wonderfully unique. She blends
+                        evidence-based medicine with genuine warmth — creating a practice where kids feel safe and
+                        parents feel heard.
+                    </p>
+
+                    <div class="feat-list stagger">
+                        <div class="feat-item reveal">
+                            <div class="feat-check">✓</div>
+                            <div class="feat-text">
+                                <strong>MD — Stanford University School of Medicine</strong>
+                                Pediatric Residency at UCSF Benioff Children's Hospital
+                            </div>
+                        </div>
+                        <div class="feat-item reveal">
+                            <div class="feat-check">✓</div>
+                            <div class="feat-text">
+                                <strong>Board Certified — American Board of Pediatrics</strong>
+                                Fellowship in Developmental-Behavioral Pediatrics
+                            </div>
+                        </div>
+                        <div class="feat-item reveal">
+                            <div class="feat-check">✓</div>
+                            <div class="feat-text">
+                                <strong>Fear-Free Certified Practitioner</strong>
+                                Specialist in reducing medical anxiety in children
+                            </div>
+                        </div>
+                        <div class="feat-item reveal">
+                            <div class="feat-check">✓</div>
+                            <div class="feat-text">
+                                <strong>"Top Pediatrician" — Bay Area Parent Magazine</strong>
+                                Four consecutive years: 2021 – 2024
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#appointment" class="btn-primary">🗓 Schedule a Visit</a>
+                </div>
+
+                <!-- Right visual -->
+                <div class="about-visual reveal">
+                    <!-- Main organic-shaped photo -->
+                    <div class="abt-main">
+                        <!--
+              DEMO IMAGE — Replace with doctor + baby/child photo.
+            -->
+                        <img src="https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=600&q=80"
+                            alt="Dr. Emily with a patient" />
+                    </div>
+
+                    <!-- Small photo -->
+                    <div class="abt-sm">
+                        <!--
+              DEMO IMAGE — Replace with clinic / waiting room photo.
+            -->
+                        <img src="https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=400&q=80"
+                            alt="Little Stars Pediatric clinic" />
+                    </div>
+
+                    <!-- Fun stat bubble -->
+                    <div class="fun-stat">
+                        <div class="bnum">3.8k</div>
+                        <span class="blabel">Happy Kids 🌟</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+       TESTIMONIALS
+       ============================================================ -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="test-header reveal">
+                <span class="sec-label">Parent Stories</span>
+                <h2 class="sec-title">What <em>Families</em> Are Saying</h2>
+            </div>
+
+            <div class="test-grid stagger">
+
+                <div class="test-card reveal">
+                    <div class="stars">★★★★★</div>
+                    <p class="test-q">"Dr. Emily was incredible with our newborn. She explained everything so clearly
+                        and made us first-time parents feel completely at ease. We are beyond grateful."</p>
+                    <div class="test-auth">
+                        <div class="t-av">👩‍👦</div>
+                        <div>
+                            <div class="auth-name">Sofia & James T.</div>
+                            <div class="auth-sub">Parents of baby Leo, 4 months</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="test-card reveal">
+                    <div class="stars">★★★★★</div>
+                    <p class="test-q">"My daughter used to cry before every doctor visit. Since switching to Dr. Chen,
+                        she actually asks when she can go back. The office is so warm and fun for kids!"</p>
+                    <div class="test-auth">
+                        <div class="t-av">👨‍👧</div>
+                        <div>
+                            <div class="auth-name">Marcus W.</div>
+                            <div class="auth-sub">Father of Emma, 5 years old</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="test-card reveal">
+                    <div class="stars">★★★★★</div>
+                    <p class="test-q">"Three kids under 6 — Dr. Emily keeps all of them on track with their development
+                        and vaccines. I trust her completely. Best pediatrician in the city, hands down."</p>
+                    <div class="test-auth">
+                        <div class="t-av">👩‍👧‍👦</div>
+                        <div>
+                            <div class="auth-name">Priya M.</div>
+                            <div class="auth-sub">Mother of three, patient since 2019</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+       APPOINTMENT CTA
+       ============================================================ -->
+    <section class="appt" id="appointment">
+        <div class="container">
+            <div class="appt-wrap reveal">
+
+                <div>
+                    <span class="sec-label">Ready to Visit?</span>
+                    <h2 class="appt-title">Book Your Child's<br><em>First Appointment</em> Today</h2>
+                    <p class="appt-desc">
+                        New patients are warmly welcomed! Same-day sick slots are often available. Telehealth
+                        appointments can usually be scheduled within 24 hours.
+                    </p>
+
+                    <div class="contact-list">
+                        <div class="ci">📞 +8801577218105</div>
+                        <div class="ci">📧 developer.junaead@gmail.com</div>
+                        <div class="ci">📍 College Road, mymensingh</div>
+                    </div>
+                </div>
+
+                <div class="appt-btns">
+                    <a href="tel:+8801577218105" class="btn-primary">📞 Call Now</a>
+                    <a href="mailto:developer.junaead@gmail.com" class="btn-sky">✉️ Email Us</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+
+                <div>
+                    <div class="f-logo">
+                        <div class="logo-icon">🍼</div>
+                        <div class="logo-text">Little<span style="color:var(--coral)">Stars</span></div>
+                    </div>
+                    <p class="f-desc">Compassionate pediatric care for children of all ages. Growing healthy futures,
+                        one little heartbeat at a time.</p>
+                    <div class="f-socials" style="margin-top:1.25rem;">
+                        <div class="fs-btn">f</div>
+                        <div class="fs-btn">ig</div>
+                        <div class="fs-btn">in</div>
+                        <div class="fs-btn">yt</div>
+                    </div>
+                </div>
+
+                <div class="f-col">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">About Dr. Emily</a></li>
+                        <li><a href="#testimonials">Reviews</a></li>
+                        <li><a href="#appointment">Book a Visit</a></li>
+                    </ul>
+                </div>
+
+                <div class="f-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#">Newborn Care</a></li>
+                        <li><a href="#">Immunizations</a></li>
+                        <li><a href="#">Sick Visits</a></li>
+                        <li><a href="#">Telehealth</a></li>
+                        <li><a href="#">Mental Health</a></li>
+                    </ul>
+                </div>
+
+                <div class="f-col">
+                    <h4>Office Hours</h4>
+                    <ul>
+                        <li><a>Mon – Fri: 8 AM – 5 PM</a></li>
+                        <li><a>Saturday: 9 AM – 1 PM</a></li>
+                        <li><a>Sunday: Closed</a></li>
+                        <li><a style="color:var(--coral);">Telehealth: 7 Days</a></li>
+                        <li><a style="color:var(--mint);">After-hours advice line ✓</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <span>© 2025 Little Stars Pediatric Care. All rights reserved.</span>
+                <span>Privacy Policy · Terms of Use</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to top -->
+    <button class="scroll-top" id="scrollTop" aria-label="Back to top">↑</button>
+
+    <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+    <script>
+        /* -----------------------------------------------------------
+           Navbar glass on scroll
+        ----------------------------------------------------------- */
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        /* -----------------------------------------------------------
+           Scroll-to-top
+        ----------------------------------------------------------- */
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            scrollTopBtn.classList.toggle('show', window.scrollY > 400);
+        });
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        /* -----------------------------------------------------------
+           Reveal on scroll (IntersectionObserver)
+        ----------------------------------------------------------- */
+        const revealEls = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        revealEls.forEach(el => observer.observe(el));
+
+        /* -----------------------------------------------------------
+           Mobile hamburger menu
+        ----------------------------------------------------------- */
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        hamburger.addEventListener('click', () => {
+            const open = navLinks.style.display === 'flex';
+            navLinks.style.display = open ? 'none' : 'flex';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '68px';
+            navLinks.style.left = '0';
+            navLinks.style.right = '0';
+            navLinks.style.background = 'rgba(255,248,240,0.97)';
+            navLinks.style.padding = '1.5rem 2rem';
+            navLinks.style.gap = '1.2rem';
+            navLinks.style.backdropFilter = 'blur(16px)';
+            navLinks.style.boxShadow = '0 8px 30px rgba(0,0,0,0.08)';
+            if (open) navLinks.style.display = 'none';
+        });
+    </script>
+
+</body>
+
+</html>
